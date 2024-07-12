@@ -38,7 +38,7 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
 
   useEffect(() => {
     if (columns.length < colNo && !modified) {
-      for (let i = 0; i < colNo; i++) {
+      for (let i = columns.length; i < colNo; i++) {
         setColumns([...columns, `Column ${columns.length + 1}`]);
       }
     }
