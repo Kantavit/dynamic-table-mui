@@ -9,6 +9,7 @@ const CreateTableForm = ({ setColNo }:{setColNo: React.Dispatch<React.SetStateAc
       return;
     }
     setColNo(cols);
+    setCols(0);
   }
 
   return (
