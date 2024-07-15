@@ -1,11 +1,7 @@
 export const addRowFunction = (
     columns: string[],
-    setModified: React.Dispatch<React.SetStateAction<boolean>>,
-    setRows: React.Dispatch<React.SetStateAction<number>>,
     setRowsData: React.Dispatch<React.SetStateAction<string[][]>>
 ) => {
-    setModified(true);
-    setRows((prevRows) => prevRows + 1);
     let array = [""];
     for (let i = 1; i < columns.length; i++) {
         array.push("");
@@ -15,22 +11,16 @@ export const addRowFunction = (
 
 export const deleteRowFunction = (
     index: number,
-    setModified: React.Dispatch<React.SetStateAction<boolean>>,
-    setRows: React.Dispatch<React.SetStateAction<number>>,
     setRowsData: React.Dispatch<React.SetStateAction<string[][]>>
 ) => {
-    setModified(true);
-    setRows((prevRows) => prevRows - 1);
     setRowsData((prevRowsData) => prevRowsData.filter((_, i) => i !== index));
 };
 
 export const addColumnFunction = (
     columns: string[],
-    setModified: React.Dispatch<React.SetStateAction<boolean>>,
     setColumns: React.Dispatch<React.SetStateAction<string[]>>,
     setRowsData: React.Dispatch<React.SetStateAction<string[][]>>
 ) => {
-    setModified(true);
     if (columns.length === 10) {
         return;
     }
@@ -43,11 +33,9 @@ export const addColumnFunction = (
 export const deleteColumnFunction = (
     index: number,
     columns: string[],
-    setModified: React.Dispatch<React.SetStateAction<boolean>>,
     setColumns: React.Dispatch<React.SetStateAction<string[]>>,
     setRowsData: React.Dispatch<React.SetStateAction<string[][]>>
 ) => {
-    setModified(true);
     if (columns.length === 1) {
         return;
     }

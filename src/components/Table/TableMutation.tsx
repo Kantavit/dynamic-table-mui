@@ -2,21 +2,21 @@ import React from 'react'
 import TableCell from '@mui/material/TableCell';
 import { addRowFunction, deleteRowFunction, addColumnFunction, deleteColumnFunction } from '@/shared/mutation/tableData.mutation';
 
-export const AddRow = (columns: string[], setModified: React.Dispatch<React.SetStateAction<boolean>>, setRows: React.Dispatch<React.SetStateAction<number>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
+export const AddRow = (columns: string[], setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
   return (
-    <button type="button" onClick={() => addRowFunction(columns, setModified, setRows, setRowsData)} className="bg-gray-300 rounded-md p-1">
+    <button type="button" onClick={() => addRowFunction(columns, setRowsData)} className="bg-gray-300 rounded-md p-1">
       Add Row
     </button>
   )
 }
 
-export const DeleteRow = (index: number, setModified: React.Dispatch<React.SetStateAction<boolean>>, setRows: React.Dispatch<React.SetStateAction<number>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
+export const DeleteRow = (index: number, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
   return (
     <TableCell align='center'>
       <button
         type="button"
         className="bg-red-400 rounded-md p-1.5"
-        onClick={() => deleteRowFunction(index, setModified, setRows, setRowsData)}
+        onClick={() => deleteRowFunction(index, setRowsData)}
       >
         Delete
       </button>
@@ -24,21 +24,21 @@ export const DeleteRow = (index: number, setModified: React.Dispatch<React.SetSt
   )
 }
 
-export const AddColumn = (columns: string[], setModified: React.Dispatch<React.SetStateAction<boolean>>, setColumns: React.Dispatch<React.SetStateAction<string[]>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
+export const AddColumn = (columns: string[], setColumns: React.Dispatch<React.SetStateAction<string[]>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
   return (
-    <button type="button" onClick={() => addColumnFunction(columns, setModified, setColumns, setRowsData)} className="bg-gray-300 rounded-md p-0.5" >
+    <button type="button" onClick={() => addColumnFunction(columns, setColumns, setRowsData)} className="bg-gray-300 rounded-md p-0.5" >
       Add Column
     </button>
   )
 }
 
-export const DeleteColumn = (index: number, columns: string[], setModified: React.Dispatch<React.SetStateAction<boolean>>, setColumns: React.Dispatch<React.SetStateAction<string[]>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
+export const DeleteColumn = (index: number, columns: string[], setColumns: React.Dispatch<React.SetStateAction<string[]>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
   return (
     <TableCell key={index + 999999} align='center'>
       <button
         type="button"
         className="bg-red-400 rounded-md p-1"
-        onClick={() => deleteColumnFunction(index, columns, setModified, setColumns, setRowsData)}
+        onClick={() => deleteColumnFunction(index, columns, setColumns, setRowsData)}
       >
         Delete
       </button>
@@ -46,7 +46,7 @@ export const DeleteColumn = (index: number, columns: string[], setModified: Reac
   )
 }
 
-export const RowData = (index: number, data: string[], rowsData: string[][], setModified: React.Dispatch<React.SetStateAction<boolean>>, setRows: React.Dispatch<React.SetStateAction<number>>, setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
+export const RowData = (index: number, data: string[], rowsData: string[][], setRowsData: React.Dispatch<React.SetStateAction<string[][]>>) => {
   const handleChange = (e: any, index: any, index2: any) => {
     const fields = rowsData[index].map((r, j) => (j === index2 ? e : r));
     setRowsData(rowsData.map((rw, i) => (i === index ? fields : rw)));
@@ -72,7 +72,7 @@ export const RowData = (index: number, data: string[], rowsData: string[][], set
   )
 }
 
-export const ColumnData = (index: number, columns: string[], readOnly: boolean, setColumns: React.Dispatch<React.SetStateAction<string[]>>, setModified: React.Dispatch<React.SetStateAction<boolean>>, setReadOnly: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const ColumnData = (index: number, columns: string[], readOnly: boolean, setColumns: React.Dispatch<React.SetStateAction<string[]>>, setReadOnly: React.Dispatch<React.SetStateAction<boolean>>) => {
   const handleChange = (e: any) => {
     setColumns(columns.map((coln, id) => id === index ? e.target.value : coln))
   }

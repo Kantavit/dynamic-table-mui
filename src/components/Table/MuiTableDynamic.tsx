@@ -9,11 +9,9 @@ import Paper from '@mui/material/Paper';
 import { DeleteColumn, DeleteRow, ColumnData, RowData, AddRow, AddColumn } from './TableMutation';
 
 export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
-  const [columns, setColumns] = useState<string[]>([]);
-  const [generating, setGenerating] = useState<boolean>(true);
-  const [readOnly, setReadOnly] = useState<boolean>(true);
-  const [rows, setRows] = useState<number>(0);
+  const [columns, setColumns] = useState<string[]>(["111", "co222lumn2"]);
   const [rowsData, setRowsData] = useState<string[][]>([]);
+  const [readOnly, setReadOnly] = useState<boolean>(true);
   const [modified, setModified] = useState<boolean>(false);
 
 //   const exportToJson = () => {
@@ -42,7 +40,7 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
         setColumns([...columns, `Column ${columns.length + 1}`]);
       }
     }
-    setGenerating(false);
+    setModified(true);
   }, [colNo, columns, modified]);
 
   return (
@@ -51,9 +49,9 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
         <div className="flex ml-auto mr-16">
           <span>Columns: {columns.length} </span> &nbsp;&nbsp;
           <span>Rows: {rowsData.length} </span>&nbsp;&nbsp;
-          {AddRow(columns, setModified, setRows, setRowsData)}
+          {AddRow(columns, setRowsData)}
           &nbsp;&nbsp;
-          {AddColumn(columns, setModified, setColumns, setRowsData)}
+          {AddColumn(columns, setColumns, setRowsData)}
 
           {/* &nbsp;&nbsp; */}
           {/* <button type="button" onClick={exportToJson} >
@@ -66,15 +64,14 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
       
       <div className="flex">
         <div className="px-5 flex flex-col" aria-label='dynamic table'>
-          {!generating ? (
             <>
-            <TableContainer component={Paper}>
+              <TableContainer component={Paper}>
               <Table className="my-5 h-100">
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
                     {columns.map((_, index) => (
-                      DeleteColumn(index, columns, setModified, setColumns, setRowsData)
+                      DeleteColumn(index, columns, setColumns, setRowsData)
                     ))}
                     <TableCell></TableCell>
                   </TableRow>
@@ -87,10 +84,10 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
                       no.
                     </TableCell>
                     {columns.map((_, index) => (
-                      ColumnData(index, columns, readOnly, setColumns, setModified, setReadOnly)
+                      ColumnData(index, columns, readOnly, setColumns, setReadOnly)
                     ))}
                     <TableCell align='center'>
-                      {AddColumn(columns, setModified, setColumns, setRowsData)}
+                      {AddColumn(columns, setColumns, setRowsData)}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -99,8 +96,8 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
                     <>
                       {rowsData.map((data, index) => (
                         <TableRow key={index + 5}>
-                            {RowData(index, data, rowsData, setModified, setRows, setRowsData)}
-                            {DeleteRow(index, setModified, setRows, setRowsData)}
+                            {RowData(index, data, rowsData, setRowsData)}
+                            {DeleteRow(index, setRowsData)}
                         </TableRow>
                       ))}
                     </>
@@ -115,16 +112,13 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
                   )}
                   <TableRow>
                         <TableCell colSpan={columns.length + 2} className="pt-5" align='center'>
-                            {AddRow(columns, setModified, setRows, setRowsData)}
+                            {AddRow(columns, setRowsData)}
                         </TableCell>
                     </TableRow>
                 </TableBody>
               </Table>
               </TableContainer>
             </>
-          ) : (
-            <h1 className="text-center my-5">Generating...</h1>
-          )}
         </div>
       </div>
     </div>
