@@ -1,11 +1,12 @@
 import React, { FormEvent, useState } from "react";
 
 const CreateTableForm = ({ setColNo }:{setColNo: React.Dispatch<React.SetStateAction<number>>}) => {
-  const [cols, setCols] = useState(0);
+  const [cols, setCols] = useState<number>(0);
 
   async function onSubmitColumn(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!cols) {
+    if (!cols || cols < 1 || cols > 10) {
+      alert("Cannot create more than 10 columns");
       return;
     }
     setColNo(cols);
