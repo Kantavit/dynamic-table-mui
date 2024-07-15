@@ -50,7 +50,7 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
       <div className="mt-5 mb-5 flex flex-col">
         <div className="flex ml-auto mr-16">
           <span>Columns: {columns.length} </span> &nbsp;&nbsp;
-          <span>Rows: {rows} </span>&nbsp;&nbsp;
+          <span>Rows: {rowsData.length} </span>&nbsp;&nbsp;
           {AddRow(columns, setModified, setRows, setRowsData)}
           &nbsp;&nbsp;
           {AddColumn(columns, setModified, setColumns, setRowsData)}
@@ -102,28 +102,22 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
                             {RowData(index, data, rowsData, setModified, setRows, setRowsData)}
                             {DeleteRow(index, setModified, setRows, setRowsData)}
                         </TableRow>
-                        
                       ))}
-                    <TableRow>
+                    </>
+                  ) : (
+                    <>
+                        <TableRow>
+                            <TableCell colSpan={columns.length + 2} align='center'>
+                            Please click on Add Row Button to add a row
+                            </TableCell>
+                        </TableRow>
+                    </>
+                  )}
+                  <TableRow>
                         <TableCell colSpan={columns.length + 2} className="pt-5" align='center'>
                             {AddRow(columns, setModified, setRows, setRowsData)}
                         </TableCell>
                     </TableRow>
-                    </>
-                  ) : (
-                    <>
-                      <TableRow>
-                        <TableCell colSpan={columns.length + 2} align='center'>
-                          Please click on Add Row Button to add a row
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell colSpan={columns.length + 2} className="pt-5" align='center'>
-                          {AddRow(columns, setModified, setRows, setRowsData)}
-                        </TableCell>
-                      </TableRow>
-                    </>
-                  )}
                 </TableBody>
               </Table>
               </TableContainer>
