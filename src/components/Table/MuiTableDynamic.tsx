@@ -9,11 +9,10 @@ import Paper from '@mui/material/Paper';
 import { DeleteColumn, DeleteRow, ColumnData, RowData, AddRow, AddColumn } from './TableMutation';
 
 export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
-  const [columns, setColumns] = useState<string[]>(["111", "co222lumn2"]);
+  const [columns, setColumns] = useState<string[]>([]);
   const [rowsData, setRowsData] = useState<string[][]>([]);
   const [readOnly, setReadOnly] = useState<boolean>(true);
-  const [modified, setModified] = useState<boolean>(false);
-
+  
 //   const exportToJson = () => {
 //     const data = [];
 
@@ -35,13 +34,12 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
 //   };
 
   useEffect(() => {
-    if (columns.length < colNo && !modified) {
+    if (columns.length < colNo) {
       for (let i = columns.length; i < colNo; i++) {
         setColumns([...columns, `Column ${columns.length + 1}`]);
       }
     }
-    setModified(true);
-  }, [colNo, columns, modified]);
+  }, [colNo, columns]);
 
   return (
     <div>
@@ -65,7 +63,7 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
       <div className="flex">
         <div className="px-5 flex flex-col" aria-label='dynamic table'>
             <>
-              <TableContainer component={Paper}>
+            <TableContainer component={Paper}>
               <Table className="my-5 h-100">
                 <TableHead>
                   <TableRow>
