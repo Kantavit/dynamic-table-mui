@@ -7,31 +7,20 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { DeleteColumn, DeleteRow, ColumnData, RowData, AddRow, AddColumn } from './TableMutation';
+import SaveTemplate from '@/components/Table/SaveTemplate';
 
-export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
+export const MuiTableDynamic = (
+    {
+        colNo, 
+        setTemplate
+    }: {
+        colNo: number, 
+        setTemplate: React.Dispatch<React.SetStateAction<string[][]>>
+    }) => {
+
   const [columns, setColumns] = useState<string[]>([]);
   const [rowsData, setRowsData] = useState<string[][]>([]);
   const [readOnly, setReadOnly] = useState<boolean>(true);
-  
-//   const exportToJson = () => {
-//     const data = [];
-
-//     rowsData.map((row, index) => {
-//       const obj = { sno: index + 1 };
-//       columns.map((col, i) => {
-//         obj[col] = row[i];
-//       });
-//       data.push(obj);
-//     });
-
-//     const fileData = JSON.stringify(data);
-//     const blob = new Blob([fileData], { type: "text/plain" });
-//     const url = URL.createObjectURL(blob);
-//     const link = document.createElement("a");
-//     link.download = `data.json`;
-//     link.href = url;
-//     link.click();
-//   };
 
   useEffect(() => {
     if (columns.length < colNo) {
@@ -43,20 +32,13 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
 
   return (
     <div>
-      <div className="mt-5 mb-5 flex flex-col">
+      <div className="my-5 flex flex-col">
         <div className="flex ml-auto mr-16">
           <span>Columns: {columns.length} </span> &nbsp;&nbsp;
           <span>Rows: {rowsData.length} </span>&nbsp;&nbsp;
           {AddRow(columns, setRowsData)}
           &nbsp;&nbsp;
           {AddColumn(columns, setColumns, setRowsData)}
-
-          {/* &nbsp;&nbsp; */}
-          {/* <button type="button" onClick={exportToJson} >
-            Save as JSON
-          </button>
-          &nbsp;&nbsp; */}
-          {/* <ExportToExcel columns={columns} rowsData={rowsData} /> */}
         </div>
       </div>
       
@@ -119,6 +101,8 @@ export const MuiTableDynamic = ({colNo}: {colNo: number}) => {
             </>
         </div>
       </div>
+      
+      <SaveTemplate columns={columns} setTemplate={setTemplate}/>
     </div>
   );
 };

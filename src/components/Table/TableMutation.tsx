@@ -74,7 +74,7 @@ export const RowData = (index: number, data: string[], rowsData: string[][], set
 
 export const ColumnData = (index: number, columns: string[], readOnly: boolean, setColumns: React.Dispatch<React.SetStateAction<string[]>>, setReadOnly: React.Dispatch<React.SetStateAction<boolean>>) => {
   const handleChange = (e: any) => {
-    setColumns(columns.map((coln, id) => id === index ? e.target.value : coln))
+    setColumns(columns.map((coln, id) => id === index ? e : coln))
   }
   
   return (
