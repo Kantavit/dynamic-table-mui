@@ -25,6 +25,7 @@ export const MuiTableDynamic = (
   const [columns, setColumns] = useState<string[]>([]);
   const [rowsData, setRowsData] = useState<string[][]>([]);
   const [readOnly, setReadOnly] = useState<boolean>(true);
+  const [modified, setModified] = useState<boolean>(false);
 
   useEffect(() => {
     if(selectTemplate.length > 0) {
@@ -33,12 +34,12 @@ export const MuiTableDynamic = (
         setSelectTemplate([]);
     }
 
-    if (columns.length < colNo) {
+    if (columns.length < colNo && !modified) {
       for (let i = columns.length; i < colNo; i++) {
         setColumns([...columns, `Column ${columns.length + 1}`]);
       }
     }
-  }, [colNo, columns, selectTemplate, setColumns, setSelectTemplate]);
+  }, [colNo, columns, selectTemplate, setColumns, setSelectTemplate, modified]);
 
   return (
     <div>
@@ -46,9 +47,9 @@ export const MuiTableDynamic = (
         <div className="flex ml-auto mr-16">
           <span>Columns: {columns.length} </span> &nbsp;&nbsp;
           <span>Rows: {rowsData.length} </span>&nbsp;&nbsp;
-          {AddRow(columns, setRowsData)}
+          {AddRow(columns, setRowsData, setModified)}
           &nbsp;&nbsp;
-          {AddColumn(columns, setColumns, setRowsData)}
+          {AddColumn(columns, setColumns, setRowsData, setModified)}
         </div>
       </div>
       
@@ -61,7 +62,7 @@ export const MuiTableDynamic = (
                   <TableRow>
                     <TableCell></TableCell>
                     {columns.map((_, index) => (
-                      DeleteColumn(index, columns, setColumns, setRowsData)
+                      DeleteColumn(index, columns, setColumns, setRowsData, setModified)
                     ))}
                     <TableCell></TableCell>
                   </TableRow>
@@ -77,7 +78,7 @@ export const MuiTableDynamic = (
                       ColumnData(index, columns, readOnly, setColumns, setReadOnly)
                     ))}
                     <TableCell align='center'>
-                      {AddColumn(columns, setColumns, setRowsData)}
+                      {AddColumn(columns, setColumns, setRowsData, setModified)}
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -87,7 +88,7 @@ export const MuiTableDynamic = (
                       {rowsData.map((data, index) => (
                         <TableRow key={index + 5}>
                             {RowData(index, data, rowsData, setRowsData)}
-                            {DeleteRow(index, setRowsData)}
+                            {DeleteRow(index, setRowsData, setModified)}
                         </TableRow>
                       ))}
                     </>
@@ -102,7 +103,7 @@ export const MuiTableDynamic = (
                   )}
                   <TableRow>
                         <TableCell colSpan={columns.length + 2} className="pt-5" align='center'>
-                            {AddRow(columns, setRowsData)}
+                            {AddRow(columns, setRowsData, setModified)}
                         </TableCell>
                     </TableRow>
                 </TableBody>
