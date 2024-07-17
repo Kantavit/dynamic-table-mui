@@ -3,15 +3,14 @@ import React from 'react'
 export const SaveTemplate = (
   {
     columns, 
-    setTemplate
+    setSaveTemplate
   }: {
     columns:string[], 
-    setTemplate: React.Dispatch<React.SetStateAction<string[][]>>
+    setSaveTemplate: React.Dispatch<React.SetStateAction<string[][]>>
   }) => {
 
   const handleChange = (columnsData: string[]) => {
-    // setTemplate(columnsData);
-    setTemplate((prevTemplate) => [...prevTemplate, columnsData]);
+    setSaveTemplate((prevSaveTemplate) => [...prevSaveTemplate, columnsData]);
   }
 
   return (

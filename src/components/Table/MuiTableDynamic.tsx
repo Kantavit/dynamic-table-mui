@@ -12,10 +12,14 @@ import SaveTemplate from '@/components/Table/SaveTemplate';
 export const MuiTableDynamic = (
     {
         colNo, 
-        setTemplate
+        setSaveTemplate, 
+        selectTemplate,
+        setSelectTemplate
     }: {
         colNo: number, 
-        setTemplate: React.Dispatch<React.SetStateAction<string[][]>>
+        setSaveTemplate: React.Dispatch<React.SetStateAction<string[][]>>,
+        selectTemplate: string[],
+        setSelectTemplate: React.Dispatch<React.SetStateAction<string[]>>
     }) => {
 
   const [columns, setColumns] = useState<string[]>([]);
@@ -23,12 +27,18 @@ export const MuiTableDynamic = (
   const [readOnly, setReadOnly] = useState<boolean>(true);
 
   useEffect(() => {
+    if(selectTemplate.length > 0) {
+        setColumns([])
+        selectTemplate.map((column) => setColumns((prevColumn) => [...prevColumn, column]));
+        setSelectTemplate([]);
+    }
+
     if (columns.length < colNo) {
       for (let i = columns.length; i < colNo; i++) {
         setColumns([...columns, `Column ${columns.length + 1}`]);
       }
     }
-  }, [colNo, columns]);
+  }, [colNo, columns, selectTemplate, setColumns, setSelectTemplate]);
 
   return (
     <div>
@@ -102,7 +112,7 @@ export const MuiTableDynamic = (
         </div>
       </div>
       
-      <SaveTemplate columns={columns} setTemplate={setTemplate}/>
+      <SaveTemplate columns={columns} setSaveTemplate={setSaveTemplate}/>
     </div>
   );
 };
